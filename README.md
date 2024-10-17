@@ -12,6 +12,8 @@ TRAIN: application uses a timer to periodically (e.g., for every minute) trigger
 
 PRED: application subscribes to these notifications and fetches the new model files from the blob store, and updates the downstream prediction tasks. Meanwhile, the dataflow also consumes pre-processed messages streaming in, say from the ETL dataflow, and after parsing it forks it to the decision tree classifier and the multi-variate regression tasks. The classifier assigns messages into classes, such as good, average or poor, based on one or more of their field values, while linear regression predicts a numerical attribute value in the message using several others. The regression task also compares the predicted values against a moving average and estimates the residual error between them. The predicted classes, values and errors are published to the MQTT broker.
 
+For more details please visit: [RIoTBench: A Real-time IoT Benchmark for Distributed Stream Processing Platforms](https://arxiv.org/pdf/1701.08530) paper or [riot-bench](https://github.com/dream-lab/riot-bench?tab=readme-ov-file) repository.
+
 
 ### Prerequisites
 

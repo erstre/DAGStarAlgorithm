@@ -1,1 +1,1 @@
-# DAGstar-A-Novel-A--alike-Algorithm-for-Optimal-Workflow-Execution-across-IoT-Platforms
+# DAGstar-A-Novel-Astar-alike-Algorithm-for-Optimal-Workflow-Execution-across-IoT-Platforms

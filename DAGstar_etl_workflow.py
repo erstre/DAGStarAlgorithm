@@ -832,7 +832,7 @@ codes_dictionary = {
 
 mult_factor = 100
 
-code1_costs = read_row("etl_" + str(my_conf_number) + "_dataflow.xlsx", 12)
+code1_costs = read_row("datasets/etl_" + str(my_conf_number) + "_dataflow.xlsx", 12)
 rows  = my_conf_number
 cols = 1
 c1_table = []
@@ -846,7 +846,7 @@ for i in range(rows):
     # Append the row to the table
     c1_table.append(row)
 
-code2_costs = read_row("etl_" + str(my_conf_number) + "_dataflow.xlsx", 9)
+code2_costs = read_row("datasets/etl_" + str(my_conf_number) + "_dataflow.xlsx", 9)
 rows  = my_conf_number
 cols = 1
 c2_table = []
@@ -860,7 +860,7 @@ for i in range(rows):
     # Append the row to the table
     c2_table.append(row)
 
-code3_costs = read_row("etl_" + str(my_conf_number) + "_dataflow.xlsx", 4)
+code3_costs = read_row("datasets/etl_" + str(my_conf_number) + "_dataflow.xlsx", 4)
 rows = 1
 cols = 1
 c3_table = []
@@ -870,7 +870,7 @@ for i in range(rows):
 		row.append(code3_costs[0] * mult_factor)
 	c3_table.append(row)
 
-code4_costs = read_row("etl_" + str(my_conf_number) + "_dataflow.xlsx", 11)
+code4_costs = read_row("datasets/etl_" + str(my_conf_number) + "_dataflow.xlsx", 11)
 rows = 1
 cols = 1
 c4_table = []
@@ -880,7 +880,7 @@ for i in range(rows):
 		row.append(code4_costs[0] * mult_factor)
 	c4_table.append(row)
 
-code5_costs = read_row("etl_" + str(my_conf_number) + "_dataflow.xlsx", 6)
+code5_costs = read_row("datasets/etl_" + str(my_conf_number) + "_dataflow.xlsx", 6)
 rows  = my_conf_number
 cols = 1
 c5_table = []
@@ -894,7 +894,7 @@ for i in range(rows):
     # Append the row to the table
     c5_table.append(row)
 
-code6_costs = read_row("etl_" + str(my_conf_number) + "_dataflow.xlsx", 8)
+code6_costs = read_row("datasets/etl_" + str(my_conf_number) + "_dataflow.xlsx", 8)
 rows  = my_conf_number
 cols = 1
 c6_table = []
@@ -908,7 +908,7 @@ for i in range(rows):
     # Append the row to the table
     c6_table.append(row)
 
-code7_costs = read_row("etl_" + str(my_conf_number) + "_dataflow.xlsx", 3)
+code7_costs = read_row("datasets/etl_" + str(my_conf_number) + "_dataflow.xlsx", 3)
 rows  = my_conf_number
 cols = 1
 c7_table = []
@@ -922,7 +922,7 @@ for i in range(rows):
     # Append the row to the table
     c7_table.append(row)
 
-code8_costs = read_row("etl_" + str(my_conf_number) + "_dataflow.xlsx", 2)
+code8_costs = read_row("datasets/etl_" + str(my_conf_number) + "_dataflow.xlsx", 2)
 rows  = my_conf_number
 cols = 1
 c8_table = []
@@ -936,7 +936,7 @@ for i in range(rows):
     # Append the row to the table
     c8_table.append(row)
 
-code9_costs = read_row("etl_" + str(my_conf_number) + "_dataflow.xlsx", 5)
+code9_costs = read_row("datasets/etl_" + str(my_conf_number) + "_dataflow.xlsx", 5)
 rows  = my_conf_number
 cols = 1
 c9_table = []
@@ -950,7 +950,7 @@ for i in range(rows):
     # Append the row to the table
     c9_table.append(row)
 
-code10_costs = read_row("etl_" + str(my_conf_number) + "_dataflow.xlsx", 10)
+code10_costs = read_row("datasets/etl_" + str(my_conf_number) + "_dataflow.xlsx", 10)
 rows = 1
 cols = 1
 c10_table = []
@@ -960,7 +960,7 @@ for i in range(rows):
 		row.append(code10_costs[0] * mult_factor)
 	c10_table.append(row)
 
-code11_costs = read_row("etl_" + str(my_conf_number) + "_dataflow.xlsx", 7)
+code11_costs = read_row("datasets/etl_" + str(my_conf_number) + "_dataflow.xlsx", 7)
 rows  = my_conf_number
 cols = 1
 c11_table = []

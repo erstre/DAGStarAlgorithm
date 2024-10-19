@@ -624,8 +624,6 @@ def add_to_sorted_list(my_lst, tmp_element):
 	# Insert the element if there's no duplicate
 	if not has_duplicate:
 		my_lst.insert(index_to_insert, tmp_element)
-	else:
-		xxxx
 
 
 def remove_duplicates(lst, are_graphs_equal):

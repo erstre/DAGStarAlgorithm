@@ -5,6 +5,7 @@ import bisect
 import json
 import networkx as nx
 import openpyxl
+import heapq
 
 # Class of nodes 
 class Node:
@@ -279,13 +280,6 @@ def calculate_heuristic(node_name, end_node, start_node, graph, c1, c2, c3, c4, 
 				max_heuristic_of_my_parents = val1 + val2
 		return max_heuristic_of_my_parents
 
-		# 	if max_heuristic_of_my_parents <= graph.nodes[my_parents].heuristic:
-		# 		max_heuristic_of_my_parents = graph.nodes[my_parents].heuristic
-		
-		# #TODO: change the fixed_tables_per_code with a function that utilizes BO or RL or any other technology in order to get the predictions
-		# my_heuristic = find_min_cost_of_conf(node_name, graph, c1, c2, c3, c4, c5, c6, c7, c8) + max_heuristic_of_my_parents
-		# return my_heuristic
-
 # Function for computing the heuristics in the right order
 def bfs(graph, end_node, start_node, c1, c2, c3, c4, c5, c6, c7, c8):
 	print("\n=================================")
@@ -502,86 +496,6 @@ def get_all_fathers(plan, node):
 		fathers.extend(get_all_fathers(plan, parent))
 	
 	return fathers
-
-# THE GENERATOR OF RANDOM PLANS: UNDER CONSTRUCTION...
-# Maybe we have to re-consider...
-def workflow_generator(g):
-	num_nodes_workflow = int(input('Insert the exact number of nodes for the workflow: '))
-	all_nodes = set(range(1, num_nodes_workflow + 1))
-	num_codes_workflow = int(input('Insert the exact number of different types/codes of operators for the workflow: '))
-	all_codes = list(range(1, num_codes_workflow + 1))
-	max_num_downstream_workflow = int(input('Insert the maximum number of downstream operators that each node can have for the workflow: '))
-
-	for node in all_nodes:
-		g.add_node(node, 0, 0, "CODE" + str(choice(all_codes)), 'dummy0', 'dummy0')
-
-	# TODO: define the edges and the level of each node...
-	level_lst = []
-	while all_nodes:
-		tmp = randint(1, math.ceil(0.4 * len(all_nodes)))
-		lst_tmp = []
-		for i in range(0, tmp):
-			lst_tmp.append(all_nodes.pop())
-		level_lst.append(lst_tmp)
-	print(level_lst)
-	
-	all_nodes = set(range(1, num_nodes_workflow + 1))
-	for i in range(0, len(level_lst) - 1):
-		print(f"Level: {i}...")
-		for j in range(0, len(level_lst[i])):
-			print(level_lst[i][j])
-
-			# Compute the number of nodes that currently exist in the "next" level
-			tmp_size = 0
-			for k in range(0, len(level_lst[i + 1])):
-				if level_lst[i + 1][k] in all_nodes:
-					tmp_size += 1
-			
-			# Generate the number of parents for this node
-			tmp = randint(0, min(max_num_downstream_workflow, tmp_size))
-
-			while tmp != 0:
-				tmp2 = randint(0, len(level_lst[i + 1]) - 1)
-				if level_lst[i + 1][tmp2] in all_nodes:
-					g.add_edge(level_lst[i + 1][tmp2], level_lst[i][j], 1)
-					print(f"Selected node {level_lst[i + 1][tmp2]}")
-					all_nodes.remove(level_lst[i + 1][tmp2])
-					tmp -= 1
-	print(g)
-	print(g.get_root_nodes())
-
-	# Second phase
-	# Add edges between level with distance > 1
-	for i in range(0, len(level_lst) - 1):
-		#print(f"Level: {i}...")
-		current_index = i
-		probabilities = []
-		total_prob = 0
-		for j in range(current_index + 1, len(level_lst)):
-			distance = j - current_index
-			probability = 1 / (2 ** distance)
-			probabilities.append(probability)
-			total_prob += probability
-
-		# Normalize the probabilities
-		probabilities = [prob / total_prob for prob in probabilities]
-		#print(probabilities)
-		
-		for j in range(0, len(level_lst[i])):
-			new_edge = choices([0, 1], weights=[0.8, 0.2], k=1)[0]
-			if not new_edge:
-				continue
-			else:
-				print("need add")
-				# Generate the level randomly (higher probability for levels that are nearer to the current level)
-				add_in_level = choices(range(i + 1, len(level_lst)), weights=probabilities, k=1)[0]
-				print(f"add_in_level: {add_in_level}")
-				node_of_selected_level = randint(0, len(level_lst[add_in_level]) - 1)
-				g.add_edge(level_lst[add_in_level][node_of_selected_level], level_lst[i][j], 1)
-				print(f"add_edge_from: {level_lst[add_in_level][node_of_selected_level]} to {level_lst[i][j]}")
-	print(g)
-
-	return(g)
 
 # Function that checks whether to plans are equal, i.e., they have same: estimated cost, number of nodes, conf per node, parents and kids
 def are_graphs_equal(graph1, graph2):
@@ -994,7 +908,9 @@ graph_start.add_node(START_NODE, 0, 0, 'START', 'START', 'START')
 graph_start.set_estimated_cost_of_graph(100000000000000)
 graph_start.nodes[START_NODE].set_heuristic_cost(0)
 graph_start.nodes[START_NODE].set_real_cost(0)
-queue_of_plans.append(graph_start)
+
+counter_heapQ = 1
+heapq.heappush(queue_of_plans, (100000000000000, counter_heapQ, graph_start))
 
 # The ground truth, based on this we make the configurations, get the parents-kids etc. in our A*-alike search of the optimal solution
 graph_guru = graph
@@ -1015,9 +931,9 @@ while True:
 		tmp_queue_of_plans = []
 
 		# Dequeue the next plan
-		plan_tmp = queue_of_plans.pop(0)
-		# print(counter)
-		# print(f"The estimated cost of the examined plan is ----> {plan_tmp.get_estimated_cost_of_graph()}")
+		_,_, plan_tmp = heapq.heappop(queue_of_plans)
+		print(counter)
+		print(f"The estimated cost of the examined plan is ----> {plan_tmp.get_estimated_cost_of_graph()}")
 
 		# Check if there is no node left to add, i.e., the root of the examined plan is the END_NODE
 		if END_NODE in plan_tmp.get_root_nodes():
@@ -1072,14 +988,9 @@ while True:
 					added_flag = True
 					break
 
-		# Sort the queue in order to transform it to a priority queue
-		# If this is the first iteration then you just have to extend the list (no append operation) and sort it wrt estimated_cost
-		if counter == 1:
-			queue_of_plans.extend(tmp_queue_of_plans)
-			queue_of_plans.sort(key = lambda x: x.estimated_cost, reverse = False)
-		else:
-			for tmp_element in tmp_queue_of_plans:
-				add_to_sorted_list(queue_of_plans, tmp_element)
+		for plan_tmp2 in tmp_queue_of_plans:
+			counter_heapQ += 1
+			heapq.heappush(queue_of_plans, (plan_tmp2.estimated_cost, counter_heapQ, plan_tmp2))
 
 
 		# If we want to have a priority queue with fixed size. NO GUARANTEE FOR OPTIMALITY

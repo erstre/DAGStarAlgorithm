@@ -1,9 +1,17 @@
 # DAG*: A Novel A*-alike Algorithm for Optimal Workflow Execution across IoT Platforms
 
+## Table of Contents
+
+- [Description](#description)
+- [Usage](#usage)
+- [Workflows](#workflows)
+- [License](#license)
+- [Authors](#authors)
+
 ## Description
 Many IoT applications from diverse domains rely on real-time, online analytics workflow execution to timely support decision making procedures. The efficient execution of analytics workflows requires the utilization of the processing power available across the cloud to edge continuum. Nonetheless, suggesting the optimal workflow execution over a large network of heterogeneous devices is a challenging task. The increased IoT network size increases the complexity of the optimization problem at hand. The ingested data streams exhibit highly volatile properties. The population of network devices dynamically changes. We introduce DAG*, an A*-alike algorithm that prunes large amounts of the search space explored for suggesting the most efficient workflow execution with formal optimality guarantees. We provide an incremental version of DAG* retaining the optimality property.
 
-### Workflows
+## Workflows
 ETL: ingests incoming data streams in SenML format, performs data filtering of outliers on individual observation types using a Range and Bloom filter, and subsequently interpolates missing values. It then annotates additional meta-data into the observed fields of the message and then inserts the resulting tuples into Azure table storage, while also converting the data back to SenML and publishing it to MQTT. A dummy sink task shown is used for logging purposes.
 
 STATS: parses the input messages that arrive in SenML format – typically from the ETL, but kept separate here for modularity. It then performs three types of statistical analytics in parallel on individual observation fields present in the message: an average over a 10 message window, Kalman filtering to smooth the observation fields followed by a sliding window linear regression, and an approximate count of distinct values that arrive. These three output streams are then grouped for each sensor IDs, plotted and the resulting image files zipped. These three tasks are tightly coupled and we combine them into a single meta-task for manageability, as is common. and the output file is written to Cloud storage for hosting on a portal.
@@ -20,6 +28,10 @@ For more details please visit: [RIoTBench: A Real-time IoT Benchmark for Distrib
 The following software needs to be installed.
 
 - ```Python```
+
+## License
+
+Distributed under the GPL-3.0 License. See [`LICENSE`](LICENSE) for more information.
 
 ## Authors
 

@@ -6,6 +6,7 @@
 - [Datasets](#datasets)
 - [Networks](#networks)
 - [Workflows](#workflows)
+- [Experimental Scenarions](#experimental)
 - [License](#license)
 - [Authors](#authors)
 
@@ -34,6 +35,11 @@ Each folder includes all necessary files to understand the network topology.
 
 For more details please visit: [RIoTBench: A Real-time IoT Benchmark for Distributed Stream Processing Platforms](https://arxiv.org/pdf/1701.08530) paper or [riot-bench](https://github.com/dream-lab/riot-bench?tab=readme-ov-file) repository.
 
+### Experimental Scenarios
+Three different Experimental scenarios were simulated:
+- Star Topology
+- NES-like
+- Tree
 
 ### Prerequisites
 

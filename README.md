@@ -6,7 +6,7 @@
 - [Datasets](#datasets)
 - [Networks](#networks)
 - [Workflows](#workflows)
-- [Experimental Scenarions](#experimental)
+- [Experimental Scenarios](#experimental)
 - [License](#license)
 - [Authors](#authors)
 

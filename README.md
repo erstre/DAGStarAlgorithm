@@ -13,9 +13,9 @@ Many IoT applications from diverse domains rely on real-time, online analytics w
 
 ## Network Samples
 The ```network_samples``` directory contains network architecture details, device links, and configurations for various network setups. Each sample represents a unique network design, highlighting connections between devices and other relevant specifications.
-# Network Sizes
--15-Device Network: Found in the ```network_samples/15_devices``` folder, this sample provides the configuration and layout for a 15-device network.
--31-Device Network: The ```network_samples/31_devices``` folder contains the architecture and configuration for a 31-device network.
+### Network Sizes
+- 15-Device Network: Found in the ```network_samples/15_devices``` folder, this sample provides the configuration and layout for a 15-device network.
+- 31-Device Network: The ```network_samples/31_devices``` folder contains the architecture and configuration for a 31-device network.
 
 ## Workflows Details
 ETL: ingests incoming data streams in SenML format, performs data filtering of outliers on individual observation types using a Range and Bloom filter, and subsequently interpolates missing values. It then annotates additional meta-data into the observed fields of the message and then inserts the resulting tuples into Azure table storage, while also converting the data back to SenML and publishing it to MQTT. A dummy sink task shown is used for logging purposes.

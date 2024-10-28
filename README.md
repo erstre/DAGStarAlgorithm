@@ -35,7 +35,7 @@ Each folder includes all necessary files to understand the network topology.
 
 For more details please visit: [RIoTBench: A Real-time IoT Benchmark for Distributed Stream Processing Platforms](https://arxiv.org/pdf/1701.08530) paper or [riot-bench](https://github.com/dream-lab/riot-bench?tab=readme-ov-file) repository.
 
-### Experimental Scenarios
+## Experimental Scenarios
 Three different Experimental scenarios were simulated:
 - IoT networks with hierarchical organizations: Necessary files can be found on ```root``` directory.
 - Star topology: Necessary files can be found on ```star_topology_scenario``` directory.

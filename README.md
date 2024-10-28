@@ -40,6 +40,7 @@ Three different Experimental scenarios were simulated:
 - IoT networks with hierarchical organizations: Necessary files can be found on ```root``` directory.
 - Star topology: Necessary files can be found on ```star_topology_scenario``` directory.
 - NES-like architecture: Necessary files can be found on ```NES_like_scenario``` directory.
+
 In each scenario can be found implementations of DAG*, SpringRelax and Governor approaches.
 
 ### Prerequisites

@@ -3,7 +3,7 @@
 ## Table of Contents
 
 - [Description](#description)
-- [Network](#network)
+- [Networks](#networks)
 - [Workflows](#workflows)
 - [License](#license)
 - [Authors](#authors)

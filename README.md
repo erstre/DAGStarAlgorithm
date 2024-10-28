@@ -43,6 +43,13 @@ Three different Experimental scenarios were simulated:
 
 In each scenario can be found implementations of DAG*, SpringRelax and Governor approaches.
 
+> **Note**  
+> All executable Python files ```(.py)``` across directories can be run by executing the following command: 
+```bash
+python3 file_name.py
+```
+Replace ```file_name.py``` with the desired script's name to initiate the program.
+
 ### Prerequisites
 
 The following software needs to be installed.

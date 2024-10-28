@@ -14,7 +14,7 @@
 Many IoT applications from diverse domains rely on real-time, online analytics workflow execution to timely support decision making procedures. The efficient execution of analytics workflows requires the utilization of the processing power available across the cloud to edge continuum. Nonetheless, suggesting the optimal workflow execution over a large network of heterogeneous devices is a challenging task. The increased IoT network size increases the complexity of the optimization problem at hand. The ingested data streams exhibit highly volatile properties. The population of network devices dynamically changes. We introduce DAG*, an A*-alike algorithm that prunes large amounts of the search space explored for suggesting the most efficient workflow execution with formal optimality guarantees. We provide an incremental version of DAG* retaining the optimality property.
 
 ## Datasets
-The ```datasets``` directory contains datasets generated from simulations run using the iFogSim framework. These datasets include detailed metrics, outputs, and performance evaluations relevant to the simulated network scenarios.
+The ```datasets``` directory contains datasets generated from simulations run using the [iFogSim](https://onlinelibrary.wiley.com/doi/abs/10.1002/spe.2509) framework. These datasets include detailed metrics, outputs, and performance evaluations relevant to the simulated network scenarios.
 
 ## Networks
 The ```network_samples``` directory contains network architecture details, device links, and configurations for various network setups. Each sample represents a unique network design, highlighting connections between devices and other relevant specifications.

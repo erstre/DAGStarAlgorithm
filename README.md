@@ -39,7 +39,7 @@ For more details please visit: [RIoTBench: A Real-time IoT Benchmark for Distrib
 Three different Experimental scenarios were simulated:
 - IoT networks with hierarchical organizations: Necessary files can be found on ```root``` directory.
   > Note:
-  > The implementations of SpringRelax and Governor approaches can be found on the ```spring_relax``` and ```governor``` directories for this specific scenario. Moreover, the implementation of the ```K``` version of DAG* can be found on ```kappa_scenario``` directory; while the dynamic scenario on STATS workflow can be found on ```dynamic_scenario``` directory.
+  > The implementations of SpringRelax and Governor approaches can be found on the ```spring_relax``` and ```governor``` directories for this specific scenario. Moreover, the implementation of the ```K``` version of DAG* can be found on ```kappa_scenario``` directory; while the d-DAG* algorithm on STATS workflow can be found on ```dynamic_scenario``` directory.
 - Star topology: Necessary files can be found on ```star_topology_scenario``` directory.
 - NES-like architecture: Necessary files can be found on ```NES_like_scenario``` directory.
 

@@ -1,7 +1,6 @@
 from random import randint, choice, choices
 import copy
 import math
-import bisect
 import json
 import networkx as nx
 import openpyxl
@@ -139,6 +138,43 @@ class DirectedWeightedGraph:
 				leaf_nodes.append(node_name)
 		return leaf_nodes
 
+	def __eq__(self, other):
+		# Check if they have the same nodes
+		if set(self.get_all_nodes()) != set(other.get_all_nodes()):
+			return False
+
+		# Check if each node has the same parents, children, location, and framework
+		for node_name in self.get_all_nodes():
+			node1 = self.nodes[node_name]
+			node2 = other.nodes[node_name]
+
+			if set(node1.get_parents()) != set(node2.get_parents()):
+				return False
+
+			if set(node1.get_children()) != set(node2.get_children()):
+				return False
+
+			if node1.get_location() != node2.get_location():
+				return False
+
+			if node1.get_framework() != node2.get_framework():
+				return False
+
+		# If all checks passed, the graphs are equal
+		return True
+
+	def __hash__(self):
+		tmp_str = ""
+		for node_name in self.get_all_nodes():
+			for ch in self.nodes[node_name].get_children():
+				tmp_str += str(ch)
+			for p in self.nodes[node_name].get_parents():
+				tmp_str += str(p)
+			tmp_str += str(self.nodes[node_name].get_location())
+			tmp_str += str(self.nodes[node_name].get_framework())
+			tmp_str += str(self.nodes[node_name].get_operator())
+		return hash(tmp_str)
+
 	def __str__(self):
 		return "\n".join([str(self.nodes[node_name]) for node_name in self.nodes])
 
@@ -217,7 +253,6 @@ def create_com_graph(node1_lst, node2_lst, com_lat_list):
     return G
 
 # Based on the CODE, i.e., operator this function return the minimum cost of all configurations (given a specific operator type)
-# This function utilizes the min_conf_of_code() for such purpose
 def find_min_cost_of_conf(node_name, graph, operator_costs):
 	operator_name = graph.nodes[node_name].get_operator()
 
@@ -230,19 +265,6 @@ def find_min_cost_of_conf(node_name, graph, operator_costs):
 	    return float(min(operator_costs[operator_name]))
 	else:
 	    raise ValueError(f"Unknown operator: {operator_name}")
-
-# This function is utilized by find_min_cost_of_conf()
-def min_conf_of_code(lst):
-	print(lst)
-	if not lst:
-		return None
-	min_val = 100000000000
-	for sub_lst in lst:
-		for item in sub_lst:
-			if min_val > item:
-				min_val = item
-
-	return min_val
 
 # Function that returns the real cost based on the CODE of the operator and a specific configuration
 def get_real_cost_of_conf(op_code, i, j, operator_costs):
@@ -336,8 +358,8 @@ def get_communication_cost(graph, child, father):
 # current_graph: is the graph or plan that we have constructed so far
 # possible_locations and possible_frameworks are needed in order to add to the plan all possible combinations of new_node
 # END_NODE is needed since the END_NODE does not have many types, i.e., location and framework 
-# c1 and c2 are the tables that we have define (the costs of each conf per type of operator, i.e., CODE)
-def construct_new_plan(so_far_nodes, new_node, original_graph, current_graph, possible_locations, possible_frameworks, END_NODE, operator_costs):
+# operator_costs contains the costs of executing any operator to any (valid) device
+def construct_new_plan(so_far_nodes, new_node, original_graph, current_graph, possible_locations, possible_frameworks, END_NODE, operator_costs, aggr_func):
 	# The queue that contains all the plans that we want to study in the future
 	tmp_queue_of_plans2 = []
 
@@ -367,35 +389,32 @@ def construct_new_plan(so_far_nodes, new_node, original_graph, current_graph, po
 				# Keep only the parents that exist in the current_graph
 				if neighbor in all_nodes_for_new_plan:
 					tmp_graph.add_edge(neighbor, all_nodes_for_new_plan[k], 1)
-		
 
 		# Compute the real cost for the just inserted node
-		################################################
-		# I. SUM scenario
-		################################################
-		sum_of_children_real_costs = 0
-		for child in tmp_graph.get_children(new_node):
-			sum_of_children_real_costs += tmp_graph.nodes[child].get_real_cost()
-		# Get the already stored real cost of this node (this is usefull for the incremental version since there is the case where a node may have data due to the "forward" process)
-		tmp = tmp_graph.nodes[new_node].get_real_cost()
-		# Set the real cost of the node
-		tmp_graph.nodes[new_node].set_real_cost(tmp + sum_of_children_real_costs)
-
-
-		################################################
-		# # II. MAX scenario
-		################################################
-		# max_tmp = -1
-		# for child in tmp_graph.get_children(new_node):
-		# 	tmp_val = tmp_graph.nodes[child].get_real_cost()
-		# 	if tmp_val >= max_tmp:
-		# 		max_tmp = tmp_val
-		# # Get the already stored real cost of this node (this is usefull for the incremental version since there is the case where a node may have data due to the "forward" process)
-		# tmp = tmp_graph.nodes[new_node].get_real_cost()
-		# # Set the real cost of the node
-		# tmp_graph.nodes[new_node].set_real_cost(tmp + max_tmp)
-
-		
+		if aggr_func == 'sum':
+			################################################
+			# I. SUM scenario
+			################################################
+			sum_of_children_real_costs = 0
+			for child in tmp_graph.get_children(new_node):
+				sum_of_children_real_costs += tmp_graph.nodes[child].get_real_cost()
+			# Get the already stored real cost of this node (this is usefull for the incremental version since there is the case where a node may have data due to the "forward" process)
+			tmp = tmp_graph.nodes[new_node].get_real_cost()
+			# Set the real cost of the node
+			tmp_graph.nodes[new_node].set_real_cost(tmp + sum_of_children_real_costs)
+		else:
+			###############################################
+			# II. MAX scenario
+			###############################################
+			max_tmp = -1
+			for child in tmp_graph.get_children(new_node):
+				tmp_val = tmp_graph.nodes[child].get_real_cost()
+				if tmp_val >= max_tmp:
+					max_tmp = tmp_val
+			# Get the already stored real cost of this node (this is usefull for the incremental version since there is the case where a node may have data due to the "forward" process)
+			tmp = tmp_graph.nodes[new_node].get_real_cost()
+			# Set the real cost of the node
+			tmp_graph.nodes[new_node].set_real_cost(tmp + max_tmp)
 
 		# Add the new graph-plan to the queue
 		tmp_queue_of_plans2.append(tmp_graph)
@@ -424,33 +443,32 @@ def construct_new_plan(so_far_nodes, new_node, original_graph, current_graph, po
 							tmp_graph.add_edge(neighbor, all_nodes_for_new_plan[k], 1)
 				
 				# Compute the real cost for the just inserted node
-				################################################
-				# I. SUM scenario
-				################################################
-				sum_of_children_real_costs = 0
-				sum_of_children_comunication_costs = 0
-				for child in tmp_graph.get_children(new_node):
-					sum_of_children_real_costs += tmp_graph.nodes[child].get_real_cost()
-					sum_of_children_comunication_costs += get_communication_cost(tmp_graph, child, new_node)
-				# Get the already stored real cost of this node
-				tmp = tmp_graph.nodes[new_node].get_real_cost()
-				# Set the real cost of the node
-				tmp_graph.nodes[new_node].set_real_cost(tmp + sum_of_children_real_costs + sum_of_children_comunication_costs)
-
-				################################################
-				# # II. MAX scenario
-				################################################
-				# max_tmp = -1
-				# for child in tmp_graph.get_children(new_node):
-				# 	tmp_val = tmp_graph.nodes[child].get_real_cost() + get_communication_cost(tmp_graph, child, new_node)
-				# 	if tmp_val >= max_tmp:
-				# 		max_tmp = tmp_val
-				# # Get the already stored real cost of this node
-				# tmp = tmp_graph.nodes[new_node].get_real_cost()
-				# # Set the real cost of the node
-				# tmp_graph.nodes[new_node].set_real_cost(tmp + max_tmp)
-
-				
+				if aggr_func == 'sum':
+					################################################
+					# I. SUM scenario
+					################################################
+					sum_of_children_real_costs = 0
+					sum_of_children_comunication_costs = 0
+					for child in tmp_graph.get_children(new_node):
+						sum_of_children_real_costs += tmp_graph.nodes[child].get_real_cost()
+						sum_of_children_comunication_costs += get_communication_cost(tmp_graph, child, new_node)
+					# Get the already stored real cost of this node
+					tmp = tmp_graph.nodes[new_node].get_real_cost()
+					# Set the real cost of the node
+					tmp_graph.nodes[new_node].set_real_cost(tmp + sum_of_children_real_costs + sum_of_children_comunication_costs)
+				else:
+					###############################################
+					# II. MAX scenario
+					###############################################
+					max_tmp = -1
+					for child in tmp_graph.get_children(new_node):
+						tmp_val = tmp_graph.nodes[child].get_real_cost() + get_communication_cost(tmp_graph, child, new_node)
+						if tmp_val >= max_tmp:
+							max_tmp = tmp_val
+					# Get the already stored real cost of this node
+					tmp = tmp_graph.nodes[new_node].get_real_cost()
+					# Set the real cost of the node
+					tmp_graph.nodes[new_node].set_real_cost(tmp + max_tmp)
 
 				# Add the new graph-plan to the queue
 				tmp_queue_of_plans2.append(tmp_graph)
@@ -490,77 +508,6 @@ def get_all_fathers(plan, node):
 		fathers.extend(get_all_fathers(plan, parent))
 	
 	return fathers
-
-# Function that checks whether to plans are equal, i.e., they have same: estimated cost, number of nodes, conf per node, parents and kids
-def are_graphs_equal(graph1, graph2):
-	# Check if they have the same nodes
-	if set(graph1.get_all_nodes()) != set(graph2.get_all_nodes()):
-		return False
-
-	# Check if each node has the same parents, children, location, and framework
-	for node_name in graph1.get_all_nodes():
-		node1 = graph1.nodes[node_name]
-		node2 = graph2.nodes[node_name]
-
-		if set(node1.get_parents()) != set(node2.get_parents()):
-			return False
-
-		if set(node1.get_children()) != set(node2.get_children()):
-			return False
-
-		if node1.get_location() != node2.get_location():
-			return False
-
-		if node1.get_framework() != node2.get_framework():
-			return False
-
-	# If all checks passed, the graphs are equal
-	return True
-
-def add_to_sorted_list(my_lst, tmp_element):
-	# Use bisect_left with a key function to find the index to insert the element
-	key_function = lambda x: x.estimated_cost
-	key_value = key_function(tmp_element)
-	index_to_insert = bisect.bisect_left([key_function(item) for item in my_lst], key_value)
-
-	# Correct the end_index to find the first index with a greater estimated cost
-	end_index = bisect.bisect([key_function(item) for item in my_lst], key_value)
-
-	# Check for duplicates within the range
-	has_duplicate = any(are_graphs_equal(my_lst[i], tmp_element) for i in range(index_to_insert, end_index))
-
-	# Insert the element if there's no duplicate
-	if not has_duplicate:
-		my_lst.insert(index_to_insert, tmp_element)
-
-
-def remove_duplicates(lst, are_graphs_equal):
-	result = []
-	prev_estimated_cost = None
-	
-	for obj in lst:
-		current_estimated_cost = obj.get_estimated_cost_of_graph()
-		
-		if current_estimated_cost != prev_estimated_cost:
-			result.append(obj)
-			prev_estimated_cost = current_estimated_cost
-		else:
-			# Use bisect_left with a key function to find the index to insert the element
-			key_function = lambda x: x.estimated_cost
-			key_value = key_function(obj)
-			index_to_insert = bisect.bisect_left([key_function(item) for item in result], key_value)
-
-			# Correct the end_index to find the first index with a greater estimated cost
-			end_index = bisect.bisect([key_function(item) for item in result], key_value)
-
-			# Check for duplicates within the range
-			has_duplicate = any(are_graphs_equal(result[i], obj) for i in range(index_to_insert, end_index))
-
-			# Insert the element if there's no duplicate
-			if not has_duplicate:
-				result.insert(index_to_insert, obj)
-	
-	return result
 
 
 def update_priority_queue(old_queue, nodes_to_change, guru, END_NODE, START_NODE, operator_costs, old_min, new_min):
@@ -681,10 +628,13 @@ def update_dict_value(dictionary, key, mult_fac):
 # Driver code
 #########################################
 
-# This variable is the #of possible locations that we want in this simulation
+# This variable is the #of possible locations (devices in the network) that we want in this simulation
 # It is used in order to automatically read the appropriate files without changing anythng else in the code
-my_conf_number = 7
+my_conf_number = 15
 mult_factor = 100
+
+# The aggregation function that will be empoyed ('sum' or 'max')
+aggr_func = 'sum'
 
 # Encoding of the START and END nodes
 START_NODE = 1000
@@ -695,7 +645,7 @@ if len(sys.argv) > 1:
     # Extract the argument (the filename)
     arg = sys.argv[1]
     
-    # Extract the part of the filename before the underscore
+    # Extract the part of the filename before the underscore (the name of the workflow)
     word = arg.split('_')[0]
     
     # Save the word to a variable
@@ -769,11 +719,6 @@ codes_dictionary['END'] = {
     'possible_frameworks_lst': ['END']
 }
 
-
-############################################
-# JUST FOR TESTING (BUG with tables... it may find 0) so i have to update them each time 
-############################################
-
 # Read Excel file
 excel_file = str(word) + "_" + str(my_conf_number) + "_dataflow.xlsx"  # Replace with your Excel file path
 df = pd.read_excel(excel_file)
@@ -799,9 +744,6 @@ for _, row in df.iterrows():
         operator_costs[operator_name] = valid_costs
 
 print(operator_costs)
-
-############################################
-############################################
 
 # Get the leaves of graph
 leaf_nodes_lst = graph.get_leaf_nodes()
@@ -911,7 +853,7 @@ while True:
 					# Find the valid locations and frameworks based on the CODE, i.e., type of operator, that the node-to-be-added has
 					possible_locations = codes_dictionary[graph_guru.nodes[parent_nodes_plan_tmp[i][j]].get_operator()]['possible_locations_lst']
 					possible_frameworks = codes_dictionary[graph_guru.nodes[parent_nodes_plan_tmp[i][j]].get_operator()]['possible_frameworks_lst']
-					tmp_queue_of_plans = construct_new_plan(nodes_plan_tmp, parent_nodes_plan_tmp[i][j], graph_guru, plan_tmp, possible_locations, possible_frameworks, END_NODE, operator_costs)
+					tmp_queue_of_plans = construct_new_plan(nodes_plan_tmp, parent_nodes_plan_tmp[i][j], graph_guru, plan_tmp, possible_locations, possible_frameworks, END_NODE, operator_costs, aggr_func)
 
 					# Compute the estimated costs of the newly inserted plans
 					# If the-just-inserted-node is the END node then we added only one plan which is in the last position of the queue (since it hasn't been sorted yet)
@@ -934,11 +876,11 @@ while True:
 			heapq.heappush(queue_of_plans, (plan_tmp2.estimated_cost, counter_heapQ, plan_tmp2))
 			plan_tmp2.set_counterQ(counter_heapQ)
 
-
+		##############################################################
 		# If we want to have a priority queue with fixed size. NO GUARANTEE FOR OPTIMALITY
 		# queue_of_plans = queue_of_plans[:5000]
 		# print(f"The size of queue currently is -----> {len(queue_of_plans)} ...")
-
+		##############################################################
 
 	# Print the number of iterations that we performed in order to find the optimal solution
 	print("\n=================================================================================================")
@@ -955,17 +897,15 @@ while True:
 	if zero_code == 0:
 		break
 
-
 	##############################################################
-	# Incremental A*-alike part
+	# Incremental A*-alike part (d-DAG*)
 	##############################################################
 
 	# Insert again the optimal plan in order to guarantee that all possible confs are available for the incremental version
 	heapq.heappush(queue_of_plans, (opt_plan.estimated_cost, x2, opt_plan))
 
 	##############################################################
-	# This block of code has to be UPDATED in order to create 
-	# automatically the changes
+	# User defined change
 	##############################################################
 
 	nodes_to_change = set()
@@ -984,7 +924,7 @@ while True:
 	new_min = float(min(operator_costs[affected_operator]))
 
 	new_priority_queue, graph_guru = update_priority_queue(queue_of_plans, nodes_to_change, graph_guru, END_NODE, START_NODE, operator_costs, old_min, new_min)
-	
+
 	queue_of_plans.clear()
 	
 	for obj in new_priority_queue:

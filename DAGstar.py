@@ -630,7 +630,7 @@ def update_dict_value(dictionary, key, mult_fac):
 
 # This variable is the #of possible locations (devices in the network) that we want in this simulation
 # It is used in order to automatically read the appropriate files without changing anythng else in the code
-my_conf_number = 15
+my_conf_number = 31
 mult_factor = 100
 
 # The aggregation function that will be empoyed ('sum' or 'max')

@@ -65,7 +65,7 @@ The following software needs to be installed.
 
 ## License
 
-Distributed under the GPL-3.0 License. See [`LICENSE`](LICENSE) for more information.
+GNU AFFERO GENERAL PUBLIC LICENSE. See [`LICENSE`](LICENSE) for more information.
 
 ## Authors
 

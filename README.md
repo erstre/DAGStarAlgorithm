@@ -72,9 +72,22 @@ GNU AFFERO GENERAL PUBLIC LICENSE. See [`LICENSE`](LICENSE) for more information
 DAG*: A Novel A*-alike Algorithm for Optimal Workflow Execution across IoT Platforms. Errikos Streviniotis, Dimitrios Banelas, Nikos Giatrakos, Antonios Deligiannakis.
 In Proceedings of the 41st International Conference on Data Engineering (ICDE'25) Hong Kong Sar, China, May 2025.
 
+If you use this work, please cite it as follows:
+
+```bibtex
+@inproceedings{streviniotis2025dagstar,
+  title     = {{DAG*}: A Novel A*-like Algorithm for Optimal Workflow Execution across IoT Platforms},
+  author    = {Errikos Streviniotis and Dimitrios Banelas and Nikos Giatrakos and Antonios Deligiannakis},
+  booktitle = {Proceedings of the 41st International Conference on Data Engineering (ICDE'25)},
+  address   = {Hong Kong SAR, China},
+  month     = {May},
+  year      = {2025}
+}
+```
+
 ## Authors
 
 - [Errikos Streviniotis](https://www.linkedin.com/in/errikos-streviniotis/): estreviniotis [.at] tuc.gr
 - Dimitrios Banelas: dbanelas [.at] tuc.gr
-- Nikos Giatrakos: ngiatrakos [.at] softnet.tuc.gr
+- Nikos Giatrakos: ngiatrakos [.at] tuc.gr
 - Antonios Deligiannakis: adeli [.at] softnet.tuc.gr

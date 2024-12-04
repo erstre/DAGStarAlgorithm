@@ -53,7 +53,7 @@ Replace ```file_name.py``` with the desired script's name to initiate the progra
 
 Note that file ```DAGstar.py``` is executed by the following command:
 ```bash
-python3 file_name.py file_name.json
+python3 DAGstar.py file_name.json
 ```
 where ```file_name.json``` describes any workflow of interest.
 

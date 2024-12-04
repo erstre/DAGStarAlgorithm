@@ -77,7 +77,7 @@ If you use this work, please cite it as follows:
 ```bibtex
 @inproceedings{streviniotis2025dagstar,
   title     = {{DAG*}: A Novel A*-like Algorithm for Optimal Workflow Execution across IoT Platforms},
-  author    = {Errikos Streviniotis and Dimitrios Banelas and Nikos Giatrakos and Antonios Deligiannakis},
+  author    = {Errikos Streviniotis, Dimitrios Banelas, Nikos Giatrakos and Antonios Deligiannakis},
   booktitle = {Proceedings of the 41st International Conference on Data Engineering (ICDE'25)},
   address   = {Hong Kong SAR, China},
   month     = {May},

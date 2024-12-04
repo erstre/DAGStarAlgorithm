@@ -51,6 +51,12 @@ python3 file_name.py
 ```
 Replace ```file_name.py``` with the desired script's name to initiate the program.
 
+Note that file ```DAGstar.py``` is executed by the following command:
+```bash
+python3 file_name.py file_name.json
+```
+where ```file_name.json``` describes any workflow of interest.
+
 ### Prerequisites
 
 The following software needs to be installed.

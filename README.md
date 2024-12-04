@@ -67,6 +67,10 @@ The following software needs to be installed.
 
 GNU AFFERO GENERAL PUBLIC LICENSE. See [`LICENSE`](LICENSE) for more information.
 
+## Publication
+DAG*: A Novel A*-alike Algorithm for Optimal Workflow Execution across IoT Platforms. Errikos Streviniotis, Dimitrios Banelas, Nikos Giatrakos, Antonios Deligiannakis
+In Proceedings of the 41st International Conference on Data Engineering (ICDE'25) Hong Kong Sar, China, May 2025.
+
 ## Authors
 
 - [Errikos Streviniotis](https://www.linkedin.com/in/errikos-streviniotis/): estreviniotis [.at] tuc.gr

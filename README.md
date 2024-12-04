@@ -69,4 +69,7 @@ GNU AFFERO GENERAL PUBLIC LICENSE. See [`LICENSE`](LICENSE) for more information
 
 ## Authors
 
-[Errikos Streviniotis](https://www.linkedin.com/in/errikos-streviniotis/)
+[Errikos Streviniotis](https://www.linkedin.com/in/errikos-streviniotis/): estreviniotis [.at] tuc.gr
+Dimitrios Banelas: dbanelas [.at] tuc.gr
+Nikos Giatrakos: ngiatrakos [.at] softnet.tuc.gr
+Antonios Deligiannakis: adeli [.at] softnet.tuc.gr

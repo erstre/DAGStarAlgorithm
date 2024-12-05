@@ -334,7 +334,7 @@ def bfs(graph, end_node, start_node, operator_costs):
 						queue.append(child_name)
 
 
-def get_communication_cost(graph, child, father):
+def get_communication_cost(graph, child, father, com_lat_mult):
 	if graph.nodes[child].get_operator() == 'START':
 		return 0
 
@@ -348,7 +348,7 @@ def get_communication_cost(graph, child, father):
 
 	# In case of different locations, exploit the communication graph in order to find the shortest path with its cost
 	cost, _ = get_path_cost(COM_GRAPH, loc_child, loc_father)
-	return cost
+	return cost * com_lat_mult
 
 
 # Function that constructs the new plan and adds them to the queue
@@ -359,7 +359,7 @@ def get_communication_cost(graph, child, father):
 # possible_locations and possible_frameworks are needed in order to add to the plan all possible combinations of new_node
 # END_NODE is needed since the END_NODE does not have many types, i.e., location and framework 
 # operator_costs contains the costs of executing any operator to any (valid) device
-def construct_new_plan(so_far_nodes, new_node, original_graph, current_graph, possible_locations, possible_frameworks, END_NODE, operator_costs, aggr_func):
+def construct_new_plan(so_far_nodes, new_node, original_graph, current_graph, possible_locations, possible_frameworks, END_NODE, operator_costs, aggr_func, com_lat_mult):
 	# The queue that contains all the plans that we want to study in the future
 	tmp_queue_of_plans2 = []
 
@@ -451,7 +451,7 @@ def construct_new_plan(so_far_nodes, new_node, original_graph, current_graph, po
 					sum_of_children_comunication_costs = 0
 					for child in tmp_graph.get_children(new_node):
 						sum_of_children_real_costs += tmp_graph.nodes[child].get_real_cost()
-						sum_of_children_comunication_costs += get_communication_cost(tmp_graph, child, new_node)
+						sum_of_children_comunication_costs += get_communication_cost(tmp_graph, child, new_node, com_lat_mult)
 					# Get the already stored real cost of this node
 					tmp = tmp_graph.nodes[new_node].get_real_cost()
 					# Set the real cost of the node
@@ -462,7 +462,7 @@ def construct_new_plan(so_far_nodes, new_node, original_graph, current_graph, po
 					###############################################
 					max_tmp = -1
 					for child in tmp_graph.get_children(new_node):
-						tmp_val = tmp_graph.nodes[child].get_real_cost() + get_communication_cost(tmp_graph, child, new_node)
+						tmp_val = tmp_graph.nodes[child].get_real_cost() + get_communication_cost(tmp_graph, child, new_node, com_lat_mult)
 						if tmp_val >= max_tmp:
 							max_tmp = tmp_val
 					# Get the already stored real cost of this node
@@ -633,8 +633,11 @@ def update_dict_value(dictionary, key, mult_fac):
 my_conf_number = 31
 mult_factor = 100
 
+# This factor simulates the constant factor for the communication latencies (e.g., 0.1 is the NES-like topology)
+com_lat_mult = 0.1
+
 # The aggregation function that will be empoyed ('sum' or 'max')
-aggr_func = 'sum'
+aggr_func = 'max'
 
 # Encoding of the START and END nodes
 START_NODE = 1000
@@ -853,7 +856,7 @@ while True:
 					# Find the valid locations and frameworks based on the CODE, i.e., type of operator, that the node-to-be-added has
 					possible_locations = codes_dictionary[graph_guru.nodes[parent_nodes_plan_tmp[i][j]].get_operator()]['possible_locations_lst']
 					possible_frameworks = codes_dictionary[graph_guru.nodes[parent_nodes_plan_tmp[i][j]].get_operator()]['possible_frameworks_lst']
-					tmp_queue_of_plans = construct_new_plan(nodes_plan_tmp, parent_nodes_plan_tmp[i][j], graph_guru, plan_tmp, possible_locations, possible_frameworks, END_NODE, operator_costs, aggr_func)
+					tmp_queue_of_plans = construct_new_plan(nodes_plan_tmp, parent_nodes_plan_tmp[i][j], graph_guru, plan_tmp, possible_locations, possible_frameworks, END_NODE, operator_costs, aggr_func, com_lat_mult)
 
 					# Compute the estimated costs of the newly inserted plans
 					# If the-just-inserted-node is the END node then we added only one plan which is in the last position of the queue (since it hasn't been sorted yet)

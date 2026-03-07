@@ -634,7 +634,7 @@ my_conf_number = 31
 mult_factor = 100
 
 # This factor simulates the constant factor for the communication latencies (e.g., 0.1 is the NES-like topology)
-com_lat_mult = 0.1
+com_lat_mult = 1
 
 # The aggregation function that will be empoyed ('sum' or 'max')
 aggr_func = 'max'
@@ -723,7 +723,7 @@ codes_dictionary['END'] = {
 }
 
 # Read Excel file
-excel_file = str(word) + "_" + str(my_conf_number) + "_dataflow.xlsx"  # Replace with your Excel file path
+excel_file = "datasets/" + str(word) + "_" + str(my_conf_number) + "_dataflow.xlsx"  # Replace with your Excel file path
 df = pd.read_excel(excel_file)
 
 # Initialize dictionary to store costs

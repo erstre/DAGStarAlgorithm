@@ -1,0 +1,74 @@
+{
+  "links": [
+    {
+      "from": "rpi3-5.grenoble.cloud",
+      "to": "a8-126.grenoble",
+      "latency": 0.611
+    },
+    {
+      "from": "rpi3-5.grenoble.cloud",
+      "to": "a8-183.grenoble",
+      "latency": 0.798
+    },
+    {
+      "from": "a8-126.grenoble",
+      "to": "a8-153.grenoble",
+      "latency": 0.666
+    },
+    {
+      "from": "a8-126.grenoble",
+      "to": "a8-13.grenoble",
+      "latency": 0.634
+    },
+    {
+      "from": "a8-183.grenoble",
+      "to": "a8-171.grenoble",
+      "latency": 0.727
+    },
+    {
+      "from": "a8-183.grenoble",
+      "to": "a8-165.grenoble",
+      "latency": 0.62
+    },
+    {
+      "from": "a8-153.grenoble",
+      "to": "a8-200.grenoble",
+      "latency": 0.777
+    },
+    {
+      "from": "a8-153.grenoble",
+      "to": "a8-134.grenoble",
+      "latency": 0.626
+    },
+    {
+      "from": "a8-13.grenoble",
+      "to": "a8-137.grenoble",
+      "latency": 0.954
+    },
+    {
+      "from": "a8-13.grenoble",
+      "to": "a8-150.grenoble",
+      "latency": 0.483
+    },
+    {
+      "from": "a8-171.grenoble",
+      "to": "a8-119.grenoble",
+      "latency": 0.881
+    },
+    {
+      "from": "a8-171.grenoble",
+      "to": "a8-48.grenoble",
+      "latency": 0.459
+    },
+    {
+      "from": "a8-165.grenoble",
+      "to": "a8-81.grenoble",
+      "latency": 0.455
+    },
+    {
+      "from": "a8-165.grenoble",
+      "to": "a8-190.grenoble",
+      "latency": 0.682
+    }
+  ]
+}

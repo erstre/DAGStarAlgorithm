@@ -1,0 +1,154 @@
+{
+  "links": [
+    {
+      "from": "rpi3-5.grenoble.cloud",
+      "to": "a8-126.grenoble",
+      "latency": 0.611
+    },
+    {
+      "from": "rpi3-5.grenoble.cloud",
+      "to": "a8-183.grenoble",
+      "latency": 0.798
+    },
+    {
+      "from": "a8-126.grenoble",
+      "to": "a8-153.grenoble",
+      "latency": 0.666
+    },
+    {
+      "from": "a8-126.grenoble",
+      "to": "a8-13.grenoble",
+      "latency": 0.634
+    },
+    {
+      "from": "a8-183.grenoble",
+      "to": "a8-171.grenoble",
+      "latency": 0.727
+    },
+    {
+      "from": "a8-183.grenoble",
+      "to": "a8-165.grenoble",
+      "latency": 0.62
+    },
+    {
+      "from": "a8-153.grenoble",
+      "to": "a8-200.grenoble",
+      "latency": 0.777
+    },
+    {
+      "from": "a8-153.grenoble",
+      "to": "a8-134.grenoble",
+      "latency": 0.626
+    },
+    {
+      "from": "a8-13.grenoble",
+      "to": "a8-150.grenoble",
+      "latency": 0.483
+    },
+    {
+      "from": "a8-13.grenoble",
+      "to": "a8-119.grenoble",
+      "latency": 0.709
+    },
+    {
+      "from": "a8-171.grenoble",
+      "to": "a8-48.grenoble",
+      "latency": 0.459
+    },
+    {
+      "from": "a8-171.grenoble",
+      "to": "a8-81.grenoble",
+      "latency": 0.467
+    },
+    {
+      "from": "a8-165.grenoble",
+      "to": "a8-190.grenoble",
+      "latency": 0.682
+    },
+    {
+      "from": "a8-165.grenoble",
+      "to": "a8-29.grenoble",
+      "latency": 0.443
+    },
+    {
+      "from": "a8-200.grenoble",
+      "to": "a8-141.grenoble",
+      "latency": 0.721
+    },
+    {
+      "from": "a8-200.grenoble",
+      "to": "a8-113.grenoble",
+      "latency": 0.47
+    },
+    {
+      "from": "a8-134.grenoble",
+      "to": "a8-24.grenoble",
+      "latency": 0.47
+    },
+    {
+      "from": "a8-134.grenoble",
+      "to": "a8-156.grenoble",
+      "latency": 0.728
+    },
+    {
+      "from": "a8-150.grenoble",
+      "to": "a8-89.grenoble",
+      "latency": 0.539
+    },
+    {
+      "from": "a8-150.grenoble",
+      "to": "a8-43.grenoble",
+      "latency": 0.479
+    },
+    {
+      "from": "a8-119.grenoble",
+      "to": "a8-197.grenoble",
+      "latency": 0.474
+    },
+    {
+      "from": "a8-119.grenoble",
+      "to": "a8-152.grenoble",
+      "latency": 0.733
+    },
+    {
+      "from": "a8-48.grenoble",
+      "to": "a8-90.grenoble",
+      "latency": 0.726
+    },
+    {
+      "from": "a8-48.grenoble",
+      "to": "a8-198.grenoble",
+      "latency": 0.462
+    },
+    {
+      "from": "a8-81.grenoble",
+      "to": "a8-212.grenoble",
+      "latency": 0.461
+    },
+    {
+      "from": "a8-81.grenoble",
+      "to": "a8-143.grenoble",
+      "latency": 0.548
+    },
+    {
+      "from": "a8-190.grenoble",
+      "to": "a8-154.grenoble",
+      "latency": 0.714
+    },
+    {
+      "from": "a8-190.grenoble",
+      "to": "a8-131.grenoble",
+      "latency": 0.783
+    },
+    {
+      "from": "a8-29.grenoble",
+      "to": "a8-219.grenoble",
+      "latency": 0.442
+    },
+    {
+      "from": "a8-29.grenoble",
+      "to": "a8-168.grenoble",
+      "latency": 0.477
+    }
+  ]
+}

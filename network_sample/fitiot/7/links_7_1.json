@@ -1,0 +1,34 @@
+{
+  "links": [
+    {
+      "from": "rpi3-5.grenoble.cloud",
+      "to": "a8-126.grenoble",
+      "latency": 0.611
+    },
+    {
+      "from": "rpi3-5.grenoble.cloud",
+      "to": "a8-183.grenoble",
+      "latency": 0.798
+    },
+    {
+      "from": "a8-126.grenoble",
+      "to": "a8-153.grenoble",
+      "latency": 0.666
+    },
+    {
+      "from": "a8-126.grenoble",
+      "to": "a8-13.grenoble",
+      "latency": 0.634
+    },
+    {
+      "from": "a8-183.grenoble",
+      "to": "a8-171.grenoble",
+      "latency": 0.727
+    },
+    {
+      "from": "a8-183.grenoble",
+      "to": "a8-165.grenoble",
+      "latency": 0.62
+    }
+  ]
+}

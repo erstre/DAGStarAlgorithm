@@ -47,9 +47,9 @@ Expected artifacts include:
 - `target/original-parallel-dag-star-1.0-SNAPSHOT.jar`
 
 ## 6. Run Benchmarks
-
-CLI contract (from `BenchmarkMain`):
-
+In order to benchmark the algorithm, the user must first unzip the test-files.zip. 
+This will create a `test-files` directory with the necessary input files for the benchmark. 
+Then, the user can run the benchmark using the following command:
 ```bash
 java -cp pdag.jar org.dbanelas.BenchmarkMain <latencyThreshold> <NetworkSize> <WorkflowName> <Threads> <FilePrefixPath>
 ```

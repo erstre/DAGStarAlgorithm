@@ -96,42 +96,24 @@ public class BenchmarkMain {
         System.out.println("--------------------------------------------------");
 
         try {
-            // Benchmark ESC (Parallel)
+            // Benchmark Serial DAG*
+            System.out.println("Benchmarking Serial DAG*...");
+            Workflow serialWorkflow = loadWorkflow(workflowFile, networkFile, dictionaryFile, costModel);
+            DAGStar serialAlgo = new DAGStar(serialWorkflow, "MAX", latencyThreshold);
+            results.add(runBenchmark(serialAlgo, "DAG* (Serial)", "1"));
+
+            // Benchmark DP-DAG* (Parallel)
             for (int threads : threadCounts) {
                 System.out.println("Benchmarking DP-DAG* [" + threads + " threads]...");
                 Workflow workflow = loadWorkflow(workflowFile, networkFile, dictionaryFile, costModel);
-                ESC esc = new ESC(workflow, threads);
-                results.add(runBenchmark(esc, "DP-DAG*", String.valueOf(threads)));
+                DPDAGStar dpAlgo = new DPDAGStar(workflow, threads, latencyThreshold);
+                results.add(runBenchmark(dpAlgo, "DP-DAG*", String.valueOf(threads)));
             }
-
 
         } catch (Exception e) {
             System.err.println("Benchmark interrupted due to error: " + e.getMessage());
             e.printStackTrace();
         }
-
-
-
-//        try {
-//            // Benchmark Serial DAG*
-//            System.out.println("Benchmarking Serial DAG*...");
-//            Workflow serialWorkflow = loadWorkflow(workflowFile, networkFile, dictionaryFile, costModel);
-//            DAGStar serialAlgo = new DAGStar(serialWorkflow, "MAX", latencyThreshold);
-//            results.add(runBenchmark(serialAlgo, "DAG* (Serial)", "1"));
-//
-//            // Benchmark DP-DAG* (Parallel)
-//            for (int threads : threadCounts) {
-//                System.out.println("Benchmarking DP-DAG* [" + threads + " threads]...");
-//                Workflow workflow = loadWorkflow(workflowFile, networkFile, dictionaryFile, costModel);
-//                DPDAGStar dpAlgo = new DPDAGStar(workflow, threads, latencyThreshold);
-//                results.add(runBenchmark(dpAlgo, "DP-DAG*", String.valueOf(threads)));
-//            }
-//
-//
-//        } catch (Exception e) {
-//            System.err.println("Benchmark interrupted due to error: " + e.getMessage());
-//            e.printStackTrace();
-//        }
 
         // Print Final Table
         printResultsTable(results);

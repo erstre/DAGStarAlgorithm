@@ -36,6 +36,9 @@ Each folder includes all necessary files to understand the network topology.
 
 For more details please visit: [RIoTBench: A Real-time IoT Benchmark for Distributed Stream Processing Platforms](https://arxiv.org/pdf/1701.08530) paper or [riot-bench](https://github.com/dream-lab/riot-bench?tab=readme-ov-file) repository.
 
+We also utilize a real-world scenario, by deploying the well-known Yahoo streaming benchmark workflow on real networks provided by [FIT IoT-LAB](https://www.iot-lab.info/). In detail, we reserved all 196 available devices at the Grenoble site of the publicly accessible FIT IoT-LAB testbed, which contains a set of Raspberry Pi 3 boards and A8 devices. Raspberry Pi 3 devices are capable of executing functional Python code and Java Streams applications, and can also host a lightweight Apache Flink deployment with a single Task Manager instance. In contrast, the more resource-constrained A8 nodes are limited to running functional Python or Java Streams applications due to their hardware limitations.
+- ```YAHOO```: The pipeline begins with a source (SRC) that generates incoming event data, which is first filtered (FLT) to remove irrelevant records and then mapped (MAP) to transform the events into a structured format suitable for processing. In parallel, a reference source (RSRC) provides auxiliary data. The main event stream is then joined (JOIN) with this reference data to enrich each event. After the join, the system performs an aggregation (AGG). Finally, the results are written to a sink (SINK) for storage or further analysis.
+
 ## Experimental Scenarios
 Three different Experimental scenarios were simulated:
 - IoT networks with hierarchical organizations: Necessary files can be found on ```root``` directory.

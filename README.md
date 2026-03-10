@@ -1,4 +1,4 @@
-# DAG*: A Novel A*-alike Algorithm for Optimal Workflow Execution across IoT Platforms
+# DAG*: An A*-inspired Algorithm for Scalable Latency-Optimal and Migration-Aware Workflow Execution across IoT Platforms
 
 ## Table of Contents
 
@@ -23,8 +23,10 @@ The ```network_samples``` directory contains network architecture details, devic
 - 7-Device Network: Found in the ```network_samples/etl_dataflow/7_1``` folder, this sample provides the configuration and layout for a 7-device network.
 - 15-Device Network: Found in the ```network_samples/etl_dataflow/15_1``` folder, this sample provides the configuration and layout for a 15-device network.
 - 31-Device Network: The ```network_samples/etl_dataflow/31_1``` folder contains the architecture and configuration for a 31-device network.
-Each folder includes all necessary files to understand the network topology. Note that fitiot folder includes two additional networks that contain 127 and 196 devices aaccordingly.
+- 127-Device Network: The ```network_samples/fitiot/127_1``` folder contains the architecture and configuration for a 127-device network.
+- 196-Device Network: The ```network_samples/fitiot/196_1``` folder contains the architecture and configuration for a 196-device network.
 
+Each folder includes all necessary files to understand the network topology.
 ## Workflows
 - ```Extraction, Transfrom & Load (ETL)```: ingests incoming data streams in SenML format, performs data filtering of outliers on individual observation types using a Range and Bloom filter, and subsequently interpolates missing values. It then annotates additional meta-data into the observed fields of the message and then inserts the resulting tuples into Azure table storage, while also converting the data back to SenML and publishing it to MQTT. A dummy sink task shown is used for logging purposes.
 
@@ -46,6 +48,9 @@ Three different Experimental scenarios were simulated:
   > The implementations of SpringRelax and Governor approaches can be found on the ```spring_relax``` and ```governor``` directories for this specific scenario. Moreover, the implementation of the ```K``` version of DAG* can be found on ```kappa_scenario``` directory.
 - Star topology: Necessary files can be found on ```star_topology_scenario``` directory.
 - NES-like architecture: Necessary files can be found on ```NES_like_scenario``` directory.
+- Migration-aware approach: Necessary files can be found on ```migration-aware-dag-star``` directory.
+- End-to-end latency constraint: Necessary files can be found on ```latency-constrained-dag-star``` directory.
+- Parallel approach: Necessary files can be found on ```parallel-dag-star``` directory.
 
 In each scenario can be found implementations of DAG*, SpringRelax and Governor approaches.
 

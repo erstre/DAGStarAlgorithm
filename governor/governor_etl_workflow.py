@@ -3,8 +3,9 @@ import random
 import copy
 import math
 import json
-import networkx as nx
 import openpyxl
+import networkx as nx
+
 
 def get_value_from_excel(file_path, operator, cloud):
     # Load the workbook and select the active sheet
